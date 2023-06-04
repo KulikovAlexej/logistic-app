@@ -20,7 +20,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: db
+      POSTGRES_DB: otus_fancy
     ports:
       - '35000:5432'
 

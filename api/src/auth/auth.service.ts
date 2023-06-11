@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { hash, genSalt } from 'bcrypt';
+import { hash, genSalt, compare } from 'bcrypt';
 import { RegisterDto } from './models/register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/user.entity';
@@ -28,5 +28,12 @@ export class AuthService {
 
   findUserByEmail(email: string): Promise<User | null> {
     return this.usersRepository.findOne({ where: { email } });
+  }
+
+  isEqualPasswordAndHash(
+    password: string,
+    passwordHash: string,
+  ): Promise<boolean> {
+    return compare(password, passwordHash);
   }
 }

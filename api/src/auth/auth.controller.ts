@@ -5,6 +5,7 @@ import {
   HttpCode,
   InternalServerErrorException,
   Post,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './models/register.dto';
@@ -32,7 +33,24 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('login')
-  public login(@Body() body) {
-    return body;
+  public async login(@Body() body: RegisterDto) {
+    const requiredUser = await this.authService.findUserByEmail(body.email);
+
+    if (!requiredUser) {
+      throw new UnauthorizedException(
+        'Пользователь с подобной почтой не существует!',
+      );
+    }
+
+    const isCorrectPassword = await this.authService.isEqualPasswordAndHash(
+      body.password,
+      requiredUser.passwordHash,
+    );
+
+    if (!isCorrectPassword) {
+      throw new BadRequestException('Неверный пароль!');
+    }
+
+    return requiredUser;
   }
 }

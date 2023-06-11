@@ -10,13 +10,17 @@ import {
 import { AuthService } from './auth.service';
 import { RegisterDto } from './models/register.dto';
 import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
   @Post('register')
   public async register(@Body() body: RegisterDto): Promise<User> {
-    const existingUser = await this.authService.findUserByEmail(body.email);
+    const existingUser = await this.usersService.findUserByEmail(body.email);
 
     if (existingUser) {
       throw new BadRequestException(
@@ -34,7 +38,7 @@ export class AuthController {
   @HttpCode(200)
   @Post('login')
   public async login(@Body() body: RegisterDto) {
-    const requiredUser = await this.authService.findUserByEmail(body.email);
+    const requiredUser = await this.usersService.findUserByEmail(body.email);
 
     if (!requiredUser) {
       throw new UnauthorizedException(
@@ -52,7 +56,7 @@ export class AuthController {
     }
 
     return {
-      accessToken: await this.authService.generateToken(requiredUser.email)
+      accessToken: await this.authService.generateToken(requiredUser.email),
     };
   }
 }

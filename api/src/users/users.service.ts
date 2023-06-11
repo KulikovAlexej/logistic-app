@@ -17,6 +17,10 @@ export class UsersService {
     });
   }
 
+  findUserByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({ where: { email } });
+  }
+
   findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }

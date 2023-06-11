@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { hash, genSalt, compare } from 'bcrypt';
 import { RegisterDto } from './models/register.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/user.entity';
-import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>,
     private jwtService: JwtService,
+    private usersService: UsersService,
   ) {}
 
   async createUser(dto: RegisterDto): Promise<User> {
@@ -25,11 +24,7 @@ export class AuthService {
     user.email = dto.email;
     user.passwordHash = hashedPassword;
 
-    return this.usersRepository.save(user);
-  }
-
-  findUserByEmail(email: string): Promise<User | null> {
-    return this.usersRepository.findOne({ where: { email } });
+    return this.usersService.save(user);
   }
 
   isEqualPasswordAndHash(

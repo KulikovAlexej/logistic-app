@@ -51,6 +51,8 @@ export class AuthController {
       throw new BadRequestException('Неверный пароль!');
     }
 
-    return requiredUser;
+    return {
+      accessToken: await this.authService.generateToken(requiredUser.email)
+    };
   }
 }

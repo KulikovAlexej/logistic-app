@@ -4,11 +4,13 @@ import { RegisterDto } from './models/register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/user.entity';
 import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async createUser(dto: RegisterDto): Promise<User> {
@@ -35,5 +37,9 @@ export class AuthService {
     passwordHash: string,
   ): Promise<boolean> {
     return compare(password, passwordHash);
+  }
+
+  generateToken(email: string): Promise<string> {
+    return this.jwtService.signAsync(email);
   }
 }

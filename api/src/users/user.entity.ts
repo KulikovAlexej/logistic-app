@@ -22,4 +22,7 @@ export class User {
 
   @Column()
   passwordHash: string;
+
+  @Column({ nullable: true })
+  roles: string;
 }

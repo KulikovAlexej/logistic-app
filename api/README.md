@@ -77,8 +77,8 @@ Nest is [MIT licensed](LICENSE).
 В самой админке подключаемся к базе, которая находится также в докер-контейнере, как хост при настройке сервера указываем host.docker.internal, порт 35000.
 
 Создание миграции:
-npx typeorm-ts-node-esm migration:generate ./src/migrations/ИМЯ_ДЛЯ_МИГРАЦИИ -d .\src\config\typeorm-datasource.ts
+npm run migration:gen --name=migration_name
 
 Применение миграции:
-npx typeorm-ts-node-esm migration:run -d .\src\config\typeorm-datasource.ts
+npm run migration:run
 

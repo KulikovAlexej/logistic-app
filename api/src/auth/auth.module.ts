@@ -4,9 +4,18 @@ import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JWTStrategy } from './jwt.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { jwtConfig } from '../configs/jwt.config';
 
 @Module({
-  imports: [UsersModule, JwtModule.register({ secret: 'TEST_SECRET' })], // FIXME: надо забрасывать через .env секреты,
+  imports: [
+    UsersModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: jwtConfig,
+    }),
+  ],
   controllers: [AuthController],
   providers: [AuthService, JWTStrategy],
 })

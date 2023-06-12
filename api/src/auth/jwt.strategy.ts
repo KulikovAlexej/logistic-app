@@ -13,10 +13,12 @@ export class JWTStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(jwtContent: JwtTokenContentModel): Promise<boolean> {
+  async validate(
+    jwtContent: JwtTokenContentModel,
+  ): Promise<JwtTokenContentModel> {
     if (!jwtContent) {
       throw new UnauthorizedException();
     }
-    return true;
+    return jwtContent;
   }
 }

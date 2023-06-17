@@ -56,7 +56,10 @@ export class AuthController {
     }
 
     return {
-      accessToken: await this.authService.generateToken(requiredUser.email),
+      accessToken: await this.authService.generateToken(
+        requiredUser.email,
+        requiredUser.roles,
+      ),
     };
   }
 }

@@ -5,6 +5,7 @@ import { User } from '../users/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { JwtTokenContentModel } from './models/jwt-token-content.model';
+import { UserRoles } from '../users/consts/user-roles.enum';
 
 @Injectable()
 export class AuthService {
@@ -28,25 +29,6 @@ export class AuthService {
     return this.usersService.save(user);
   }
 
-  async validateUser(email: string, password: string): Promise<User | null> {
-    const requiredUser = await this.usersService.findUserByEmail(email);
-
-    if (!requiredUser) {
-      return null;
-    }
-
-    const isEqualPassword = await this.isEqualPasswordAndHash(
-      password,
-      requiredUser.passwordHash,
-    );
-
-    if (!isEqualPassword) {
-      return null;
-    }
-
-    return requiredUser;
-  }
-
   isEqualPasswordAndHash(
     password: string,
     passwordHash: string,
@@ -54,8 +36,8 @@ export class AuthService {
     return compare(password, passwordHash);
   }
 
-  generateToken(email: string): Promise<string> {
-    const payload: JwtTokenContentModel = { email };
+  generateToken(email: string, roles: UserRoles[]): Promise<string> {
+    const payload: JwtTokenContentModel = { email, roles };
     return this.jwtService.signAsync(payload);
   }
 }

@@ -9,11 +9,11 @@ import { User } from '../users/user.entity';
 export class GeoPointsService {
   constructor(
     @InjectRepository(GeoPointEntity)
-    private geoPointService: Repository<GeoPointEntity>,
+    private geoPointEntityRepository: Repository<GeoPointEntity>,
   ) {}
 
   public getPoints(): Promise<GeoPointEntity[]> {
-    return this.geoPointService.find();
+    return this.geoPointEntityRepository.find();
   }
 
   public createPoint(
@@ -28,6 +28,6 @@ export class GeoPointsService {
     geoPoint.longitude = pointDto.longitude;
     geoPoint.creator = pointCreator;
 
-    return this.geoPointService.save(geoPoint);
+    return this.geoPointEntityRepository.save(geoPoint);
   }
 }

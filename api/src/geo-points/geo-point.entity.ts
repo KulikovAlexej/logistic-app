@@ -3,10 +3,10 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  Point,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../users/user.entity';
+import { GeoGroupEntity } from '../geo-groups/geo-group.entity';
 
 @Entity('geo_point')
 export class GeoPointEntity {
@@ -30,4 +30,7 @@ export class GeoPointEntity {
 
   @ManyToOne(() => User)
   creator: User;
+
+  @ManyToOne(() => GeoGroupEntity, (group) => group.geoPoints)
+  group: GeoGroupEntity;
 }

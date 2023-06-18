@@ -36,8 +36,6 @@ export class GeoPointsController {
     @Body() body: CreateGeoPointDto,
     @UserEmailDecorator() creatorEmail: string,
   ): Promise<GeoPointEntity> {
-    console.log(creatorEmail);
-
     const creator = await this.userService.findUserByEmail(creatorEmail);
 
     if (!creator) {

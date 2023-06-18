@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { GeoGroupsService } from './geo-groups.service';
 import { CreateGeoGroupDto } from './models/models';
 import { UsersService } from '../users/users.service';
@@ -17,6 +17,11 @@ export class GeoGroupsController {
   @Get()
   public getGeoGroups(): Promise<GeoGroupEntity[]> {
     return this.geoGroupsService.getGeoGroups();
+  }
+
+  @Get(':groupId')
+  public getGeoGroupById(@Param('groupId') groupId: number) {
+    return this.geoGroupsService.getGeoGroupById(groupId);
   }
 
   @Post('create')

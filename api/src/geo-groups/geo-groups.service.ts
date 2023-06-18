@@ -17,7 +17,10 @@ export class GeoGroupsService {
   }
 
   public getGeoGroupById(groupId: number): Promise<GeoGroupEntity> {
-    return this.geoGroupRepository.findOne({ where: { id: groupId } });
+    return this.geoGroupRepository.findOne({
+      where: { id: groupId },
+      relations: { geoPoints: true },
+    });
   }
 
   public async createGroup(dto: CreateGeoGroupDto, creator: User) {

@@ -7,7 +7,7 @@ import { GeoGroupEntity } from './geo-group.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([GeoGroupEntity]), UsersModule],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, GeoGroupsService],
   providers: [GeoGroupsService],
   controllers: [GeoGroupsController],
 })

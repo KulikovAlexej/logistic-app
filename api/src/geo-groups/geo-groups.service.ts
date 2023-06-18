@@ -16,6 +16,10 @@ export class GeoGroupsService {
     return this.geoGroupRepository.find();
   }
 
+  public getGeoGroupById(groupId: number): Promise<GeoGroupEntity> {
+    return this.geoGroupRepository.findOne({ where: { id: groupId } });
+  }
+
   public async createGroup(dto: CreateGeoGroupDto, creator: User) {
     const group = new GeoGroupEntity();
     group.name = dto.name;

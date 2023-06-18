@@ -10,3 +10,5 @@ export type CreateGeoPointDto = Omit<
   'id' | 'createdDate' | 'creator' | 'point'
 > &
   Coordinates;
+
+export type BindPointToGeoGroupDto = { groupId: number };

@@ -25,7 +25,7 @@ export class GeoPointsController {
   ) {}
 
   @Get()
-  public getPoints(): string[] {
+  public getPoints(): Promise<GeoPointEntity[]> {
     return this.geoPointsService.getPoints();
   }
 

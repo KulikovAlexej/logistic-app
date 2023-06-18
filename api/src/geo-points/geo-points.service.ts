@@ -12,8 +12,8 @@ export class GeoPointsService {
     private geoPointService: Repository<GeoPointEntity>,
   ) {}
 
-  public getPoints(): string[] {
-    return ['point1', 'point2'];
+  public getPoints(): Promise<GeoPointEntity[]> {
+    return this.geoPointService.find();
   }
 
   public createPoint(

@@ -17,6 +17,12 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 export class UsersController {
   constructor(private userService: UsersService) {}
 
+  // FIXME: удалить. Проверка для настройки доступности сервиса
+  @Get('ping')
+  public ping(): unknown {
+    return { status: 'ok' }
+  }
+
   @Get('all')
   async getAll(): Promise<User[]> {
     return await this.userService.findAll();

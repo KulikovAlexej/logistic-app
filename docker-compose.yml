@@ -1,6 +1,10 @@
 version: '3'
 
 services:
+  frontend:
+    build: ./logist-app-frontend
+    ports:
+      - '80:80'
   api:
     build: ./api
     restart: unless-stopped
